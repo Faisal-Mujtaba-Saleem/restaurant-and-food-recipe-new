@@ -5,7 +5,7 @@ function TeamMember({ teamMember }) {
     return (
         <div className="p-4 lg:w-1/4 md:w-1/2 w-full">
             <div className="h-[full] flex flex-col items-center text-center group">
-                <img alt={teamMember.memberName} className="flex-shrink-0 rounded-lg w-full h-56 lg:object-cover object-contain object-center mb-4" src={teamMember.memberImg} />
+                <img alt={teamMember.memberName} className="flex-shrink-0 rounded-lg w-full h-56 object-contain object-center mb-4" src={teamMember.memberImg} />
                 <div className="w-full font-playfairDisplay">
                     <h2 className="title-font font-medium text-sm tracking-wider leading-relaxed text-[#222222] hover:text-[#f4b350] group-hover:text-[#f4b350]">
                         {teamMember.memberName}
