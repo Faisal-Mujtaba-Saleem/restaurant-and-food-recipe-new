@@ -8,8 +8,8 @@ import {
 } from "react-router-dom";
 
 import Header from './components/commons/Header';
-import BookingResponse from './screens/BookingResponse';
 import LandingPage from './screens/LandingPage';
+import ReservationResponse from './screens/ReservationResponse';
 import Footer from './components/commons/Footer';
 import Blogs from './screens/Blogs';
 import RecipeDetails from './screens/RecipeDetails';
@@ -30,7 +30,7 @@ function App() {
           <Route
             path="/seats"
             element={
-              <BookingResponse />
+              <ReservationResponse />
             }
           />
 

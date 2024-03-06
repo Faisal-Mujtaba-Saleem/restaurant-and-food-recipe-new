@@ -72,7 +72,7 @@ function Team() {
     }, [])
     return (
         <section ref={teamRef} className="text-gray-600 body-font">
-            <div className="container py-20 lg:mx-20">
+            <div className="container p-20 mx-4">
 
                 <SectionHead sectionTitle={sectionTitle} sectionDescription={sectionDescription} titleTextClr={'black'} />
 
@@ -80,7 +80,7 @@ function Team() {
                     {
                         teamSlider.map(
                             (teamSlide, slideIndex) => <Carousel.Item key={slideIndex}>
-                                <div className="flex flex-wrap w-full">
+                                <div className="container flex flex-wrap w-full justify-center">
                                     {
                                         teamSlide.map(
                                             (teamMember, memberIndex) => <TeamMember key={memberIndex} teamMember={teamMember} />

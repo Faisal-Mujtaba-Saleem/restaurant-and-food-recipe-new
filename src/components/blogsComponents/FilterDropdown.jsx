@@ -78,7 +78,7 @@ function FilterDropdown() {
                                             id={"N/A"}
                                             name={filterCategory}
                                             type="radio"
-                                            className="form-radio h-4 w-4"
+                                            className="form-radio h-4 w-4 accent-[#f4b350]"
                                             checked={
                                                 filterCategory === "cuisineTypes" ?
                                                     cuisineType === "" :
@@ -100,7 +100,7 @@ function FilterDropdown() {
                                                     id={subFilterCategory}
                                                     name={filterCategory}
                                                     type="radio"
-                                                    className="form-radio h-4 w-4"
+                                                    className="form-radio h-4 w-4 accent-[#f4b350]"
                                                     value={subFilterCategory}
                                                     onChange={onFilterInputChange} />
                                                 <label

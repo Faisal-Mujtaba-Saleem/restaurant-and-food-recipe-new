@@ -1,74 +1,96 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
 import { RefContext } from '../contexts/RefContext';
-import ApiCalling from "../utils/ApiCalling";
-import Alert from "react-bootstrap/Alert";
+import AppAlert from '../components/commons/Alert';
+import { AlertContext } from '../contexts/AlertContext';
 
 function ReservationSection() {
-    const navigate = useNavigate();
+    // Refs 
     const reservationSectionRef = useRef(null);
+
+    // Contexts 
+    const { showAlert } = useContext(AlertContext);
     const { setReservationRef } = useContext(RefContext);
-    useEffect(() => {
-        setReservationRef(reservationSectionRef);
-    }, []);
 
-    const [show, setShow] = useState(true);
-
-    const [showSuccessAlert, setShowSuccessAlert] = useState(false);
-    const [showDangerAlert, setShowDangerAlert] = useState(false);
-
-    const [bookingCredentials, setBookingCredentials] = useState({
+    // States 
+    const [reservationCredentials, setReservationCredentials] = useState({
         guestName: "",
         date: "",
         time: "",
         persons: "",
     });
+    const [reservationCredentialsStore, setReservationCredentialsStore] = useState([]);
 
-    // post method using custom hook
-    // const Postmethod = async (e) => {
-    //     const data = await ApiCalling(
-    //         "http://localhost:3000/reservation",
-    //         "POST",
-    //         JSON.stringify(bookingCredentials)
-    //     );
-    // };
-    const onBookingFieldsChange = (e) => {
-        setBookingCredentials({
-            ...bookingCredentials,
-            [e.target.name]: e.target.value,
-        });
-    };
+    // Effects
+    useEffect(() => {
+        setReservationRef(reservationSectionRef);
+    }, []);
 
-    const handleClickToBook = async (e) => {
-        localStorage.setItem(
-            "Booking Credentials",
-            JSON.stringify(bookingCredentials)
-        );
-
-        // POST METHOD
-
-        setBookingCredentials({
-            guestName: "",
-            date: "",
-            time: "",
-            persons: "",
-        });
-
-        // only alert maeesage is left
-        if (
-            bookingCredentials.guestName &&
-            bookingCredentials.persons &&
-            bookingCredentials.date &&
-            bookingCredentials.time
-        ) {
-            // Navigate to "/seatsbooking"
-            navigate("/seats");
-            // Postmethod();
-            setShowSuccessAlert(true);
-            setShowDangerAlert(false);
+    useEffect(() => {
+        const seats = JSON.parse(
+            localStorage.getItem("Seats_Reserved")
+        )
+        if (!!seats) {
+            localStorage.setItem(
+                "Seats_Reserved",
+                JSON.stringify(
+                    [...seats, ...reservationCredentialsStore]
+                )
+            );
         } else {
-            setShowDangerAlert(true);
-            setShowSuccessAlert(false);
+            localStorage.setItem(
+                "Seats_Reserved",
+                JSON.stringify(reservationCredentialsStore)
+            );
+        }
+    }, [reservationCredentialsStore])
+
+    // Utility Functions 
+    const onInvalidCredentials = () => {
+        showAlert("Invalid or empty credentials", "danger");
+    }
+
+    const clearForm = () => {
+        setReservationCredentials(
+            { guestName: "", date: "", time: "", persons: "", }
+        )
+    }
+
+    // Handlers
+
+    const onReservationFieldsChange = (e) => {
+        setReservationCredentials(
+            {
+                ...reservationCredentials,
+                [e.target.name]: e.target.value
+            }
+        )
+    }
+
+    const handleClickToBook = (e) => {
+        let condition = Object.keys(reservationCredentials);
+        condition = condition.every(
+            (key) => reservationCredentials[key] !== ""
+        )
+
+        if (condition) {
+            if (
+                reservationCredentials.guestName.length >= 3
+                &&
+                parseInt(reservationCredentials.persons) > 0
+            ) {
+                setReservationCredentialsStore(
+                    (currentStore) => {
+                        return [...currentStore, reservationCredentials];
+                    }
+                );
+
+                clearForm();
+                showAlert("Your seat has been saved successfully!", "success")
+            } else
+                onInvalidCredentials();
+        }
+        else {
+            onInvalidCredentials();
         }
     };
     return (
@@ -82,7 +104,7 @@ function ReservationSection() {
                         Make Reservation
                     </h1>
                     <p className="leading-relaxed mb-5 text-[#ccc]">
-                        Booking a table has never been so easy with free & instant online
+                        Reservation a table has never been so easy with free & instant online
                         restaurant reservations, book now!!
                     </p>
                     <div className="relative mb-4">
@@ -92,8 +114,8 @@ function ReservationSection() {
                             Guest Name
                         </label>
                         <input
-                            value={bookingCredentials.guestName}
-                            onChange={onBookingFieldsChange}
+                            value={reservationCredentials.guestName}
+                            onChange={onReservationFieldsChange}
                             placeholder="Name"
                             type="text"
                             id="guestName"
@@ -107,8 +129,8 @@ function ReservationSection() {
                             Date
                         </label>
                         <input
-                            value={bookingCredentials.date}
-                            onChange={onBookingFieldsChange}
+                            value={reservationCredentials.date}
+                            onChange={onReservationFieldsChange}
                             type="date"
                             id="date"
                             name="date"
@@ -124,8 +146,8 @@ function ReservationSection() {
                                 Time
                             </label>
                             <input
-                                value={bookingCredentials.time}
-                                onChange={onBookingFieldsChange}
+                                value={reservationCredentials.time}
+                                onChange={onReservationFieldsChange}
                                 type="time"
                                 id="time"
                                 name="time"
@@ -140,8 +162,8 @@ function ReservationSection() {
                                 Persons
                             </label>
                             <input
-                                value={bookingCredentials.persons}
-                                onChange={onBookingFieldsChange}
+                                value={reservationCredentials.persons}
+                                onChange={onReservationFieldsChange}
                                 placeholder="2 people"
                                 type="number"
                                 id="persons"
@@ -151,31 +173,13 @@ function ReservationSection() {
                             />
                         </div>
                     </div>
-
-                    {/* for validation is succesfully ture  */}
-                    {showSuccessAlert && (
-                        <Alert
-                            variant="success"
-                            onClose={() => setShowSuccessAlert(false)}
-                            dismissible>
-                            Message sent successfully!
-                        </Alert>
-                    )}
-                    {/* for validation is false   */}
-                    {showDangerAlert && (
-                        <Alert
-                            variant="danger"
-                            onClose={() => setShowDangerAlert(false)}
-                            dismissible>
-                            Please fill out all fields.
-                        </Alert>
-                    )}
                     <button
                         type="button"
                         onClick={handleClickToBook}
                         className="text-[#f4b350] bg-transparent border-[1px] border-[#f4b350] rounded-sm py-[0.5rem] px-4 my-8 mr-auto focus:outline-none hover:!bg-[#f4b350] hover:text-[#fff] text-md">
                         Find A Table
                     </button>
+                    <AppAlert />
                 </form>
             </div>
         </section>

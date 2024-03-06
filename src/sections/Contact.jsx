@@ -31,7 +31,7 @@ function Contact() {
     const navigate = useNavigate();
 
     const onInvalidCredentials = () => {
-        showAlert("Invalid or empty credentials", "warning");
+        showAlert("Invalid or empty credentials", "danger");
     }
 
     // Handlers 

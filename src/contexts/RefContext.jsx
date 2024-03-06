@@ -15,6 +15,7 @@ export const RefContextProvider = ({ children }) => {
     const [galleryRef, setGalleryRef] = useState(null);
     const [todaySpecialRef, setTodaySpecialRef] = useState(null);
     const [blogsRef, setBlogsRef] = useState(null);
+    const [seatsRef, setSeatsRef] = useState(null);
 
     // Provide the context value to its children
     return (
@@ -27,6 +28,7 @@ export const RefContextProvider = ({ children }) => {
             menuRef, setMenuRef,
             galleryRef, setGalleryRef,
             todaySpecialRef, setTodaySpecialRef,
+            seatsRef, setSeatsRef,
             blogsRef, setBlogsRef
         }}>
             {children}

@@ -66,6 +66,7 @@ const Header = () => {
         menuRef,
         galleryRef,
         todaySpecialRef,
+        seatsRef,
         blogsRef
     } = useContext(RefContext);
 
@@ -112,6 +113,7 @@ const Header = () => {
                 threshold: 0.1 // Percentage of the section visible
             };
             const observer = new IntersectionObserver((entries) => {
+                console.log(entries);
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
                         switch (entry.target) {
@@ -139,6 +141,9 @@ const Header = () => {
                             case contactRef.current:
                                 setActiveSection("CONTACT");
                                 break;
+                            case seatsRef.current:
+                                setActiveSection("SEATS");
+                                break;
                             case blogsRef.current:
                                 setActiveSection("BLOG");
                                 break;
@@ -160,6 +165,7 @@ const Header = () => {
                 teamRef?.current,
                 galleryRef?.current,
                 contactRef?.current,
+                seatsRef?.current,
                 blogsRef?.current
             ];
 
@@ -186,6 +192,7 @@ const Header = () => {
         teamRef,
         galleryRef,
         contactRef,
+        seatsRef,
         blogsRef
     ]);
 
