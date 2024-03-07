@@ -125,7 +125,7 @@ function ReservationResponse() {
         <table className="w-full text-sm text-left rtl:text-right text-white dark:text-gray-400">
 
           {/* Table Head */}
-          <thead className="text-md border-b text-center text-white uppercase dark:bg-gray-700 dark:text-gray-400 font-playfairDisplay">
+          <thead className="text-md border-b text-center text-[#FFC125] uppercase dark:bg-gray-700 dark:text-gray-400 font-playfairDisplay">
             <tr>
               <th scope="col" className="px-9 py-4">
                 Guest Name
