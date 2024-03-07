@@ -28,7 +28,7 @@ function ReservationSection() {
     useEffect(() => {
         const seats = JSON.parse(
             localStorage.getItem("Seats_Reserved")
-        )
+        );
         if (!!seats) {
             localStorage.setItem(
                 "Seats_Reserved",
@@ -46,7 +46,7 @@ function ReservationSection() {
 
     // Utility Functions 
     const onInvalidCredentials = () => {
-        showAlert("Invalid or empty credentials", "danger");
+        showAlert("Invalid or empty credentials!", "danger");
     }
 
     const clearForm = () => {
@@ -100,7 +100,7 @@ function ReservationSection() {
             ref={reservationSectionRef}>
             <div className="container px-5 py-24 mx-auto flex sm:flex-nowrap flex-wrap">
                 <form className="lg:w-1/3 md:w-1/2 bg-transparent flex flex-col md:mr-auto w-full md:py-8 mt-8 md:mt-0">
-                    <h1 className="title-font sm:text-4xl !text-[2.5rem] mb-4 font-medium tracking-tight text-white font-playfairDisplay after:bg-[#f4b350] after:block after:mr-auto after:w-8 after:h-[3px] after:my-4">
+                    <h1 className="title-font sm:text-4xl !text-[2.5rem] mb-2 font-medium tracking-tight text-white font-playfairDisplay after:bg-[#f4b350] after:block after:mr-auto after:w-8 after:h-[3px] after:my-4">
                         Make Reservation
                     </h1>
                     <p className="leading-relaxed mb-5 text-[#ccc]">
@@ -173,13 +173,20 @@ function ReservationSection() {
                             />
                         </div>
                     </div>
-                    <button
-                        type="button"
-                        onClick={handleClickToBook}
-                        className="text-[#f4b350] bg-transparent border-[1px] border-[#f4b350] rounded-sm py-[0.5rem] px-4 my-8 mr-auto focus:outline-none hover:!bg-[#f4b350] hover:text-[#fff] text-md">
-                        Find A Table
-                    </button>
-                    <AppAlert />
+
+                    <div className="px-2 flex justify-between items-center w-full">
+                        <span className="relative w-[50%] -ml-2">
+                            <button
+                                type="button"
+                                onClick={handleClickToBook}
+                                className="text-[#f4b350] bg-transparent border-[1px] border-[#f4b350] rounded-sm py-[0.5rem] px-4 my-8 mr-auto focus:outline-none hover:!bg-[#f4b350] hover:text-[#fff] text-md">
+                                Find A Table
+                            </button>
+                        </span>
+                        <span className="relative w-[50%] -mr-2">
+                            <AppAlert />
+                        </span>
+                    </div>
                 </form>
             </div>
         </section>

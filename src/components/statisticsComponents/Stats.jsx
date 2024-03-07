@@ -11,7 +11,7 @@ function Stats({ statistic }) {
             if (count > statistic.stats) {
                 clearInterval(timer);
             }
-        }, 100);
+        }, 1);
 
         return () => clearInterval(timer);
     }, [statistic.stats])

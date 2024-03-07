@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
+import { RefContext } from "../contexts/RefContext";
 import { MdDeleteForever, MdEdit } from "react-icons/md";
 import ModalWindow from "../components/commons/Modal";
-import { RefContext } from "../contexts/RefContext";
 
 function ReservationResponse() {
   // States 
